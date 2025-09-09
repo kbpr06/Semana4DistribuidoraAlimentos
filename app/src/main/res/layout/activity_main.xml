@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?><!-- Layout raíz con scroll para pantallas pequeñas -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Contenedor principal en columna -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <!-- Título -->
+        <TextView
+            android:id="@+id/tvTitulo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="8dp"
+            android:text="Distribuidora — Semana 4"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <!-- Subtítulo -->
+        <TextView
+            android:id="@+id/tvSubtitulo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="16dp"
+            android:text="Calculadora de despacho + conversión a radianes"
+            android:textSize="14sp" />
+
+        <!-- Botón Gmail (placeholder deshabilitado) -->
+        <Button
+            android:id="@+id/btnGmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:alpha="0.6"
+            android:enabled="false"
+            android:padding="12dp"
+            android:text="Ingresar con Gmail (próximamente)" />
+
+        <!-- Sección compra -->
+        <TextView
+            android:id="@+id/tvSeccionCompra"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="6dp"
+            android:text="Datos de la compra"
+            android:textStyle="bold" />
+
+        <!-- Monto de compra (entero) -->
+        <EditText
+            android:id="@+id/editMonto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:hint="Monto de compra (CLP)"
+            android:inputType="number"
+            android:maxLines="1" />
+
+        <!-- Distancia en km (0–20) -->
+        <EditText
+            android:id="@+id/editDistancia"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:hint="Distancia (km) — 0 a 20"
+            android:inputType="number"
+            android:maxLines="1" />
+
+        <!-- Sección radianes -->
+        <TextView
+            android:id="@+id/tvSeccionRadianes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="6dp"
+            android:text="Conversión a radianes (demo requerida)"
+            android:textStyle="bold" />
+
+        <!-- Grados (decimal) -->
+        <EditText
+            android:id="@+id/editGrados"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:hint="Grados (ej.: 180.0)"
+            android:inputType="numberDecimal"
+            android:maxLines="1" />
+
+        <!-- Botón principal -->
+        <Button
+            android:id="@+id/btnCalcular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:padding="12dp"
+            android:text="Calcular" />
+
+        <!-- Resultado -->
+        <TextView
+            android:id="@+id/textResultado"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:background="#0F000000"
+            android:padding="12dp"
+            android:text="Resultados aparecerán aquí…"
+            android:textSize="16sp"
+            android:typeface="monospace" />
+
+        <!-- Nota -->
+        <TextView
+            android:id="@+id/tvNota"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="*En monto usar solo numeros entero. Distancia válida: 0 a 20 km."
+            android:textSize="12sp" />
+
+    </LinearLayout>
+</ScrollView>
+
