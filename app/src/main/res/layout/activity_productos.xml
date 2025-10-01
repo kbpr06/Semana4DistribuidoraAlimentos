@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Pantalla con 2 CardViews:
+  - Card 1: Carrito (productos con +/- y subtotal, botón para pasar subtotal a despacho)
+  - Card 2: Despacho (ciudad, ubicación, cálculo de costo y total, guardar en Firebase)
+-->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="12dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- ===== CARD 1: CARRITO ===== -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:foreground="?attr/selectableItemBackground"
+            android:padding="12dp"
+            android:elevation="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvTituloSel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Selecciona producto y cantidad"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:paddingBottom="8dp"/>
+
+                <!-- Spinner: catálogo -->
+                <Spinner
+                    android:id="@+id/spProducto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <!-- Cantidad -->
+                <EditText
+                    android:id="@+id/etCantidad"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:inputType="number"
+                    android:hint="Cantidad"/>
+
+                <!-- Botón Agregar -->
+                <Button
+                    android:id="@+id/btnAgregar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Agregar al carrito"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Card 2: Carrito y total -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:foreground="?attr/selectableItemBackground"
+            android:padding="12dp"
+            android:elevation="4dp">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="16dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvTituloCarrito"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Carrito"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:paddingBottom="8dp"/>
+
+                <!-- Lista simple de ítems -->
+                <ListView
+                    android:id="@+id/lvCarrito"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"/>
+
+                <!-- Total -->
+                <TextView
+                    android:id="@+id/tvTotal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Total: $0"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"/>
+
+                <!-- Guardar pedido -->
+                <Button
+                    android:id="@+id/btnGuardar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Guardar pedido en Firebase"/>
+
+                <!-- Pasar subtotal al despacho -->
+                <Button
+                    android:id="@+id/btnAplicarSubtotal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Usar subtotal en Despacho"
+                    android:layout_marginTop="8dp" />
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- ===== CARD 2: DESPACHO ===== -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:foreground="?attr/selectableItemBackground"
+            android:padding="12dp"
+            android:elevation="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvTituloDespacho"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Despacho"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:layout_marginBottom="8dp" />
+
+                <!-- Monto del carrito (llega desde Card 1) -->
+                <EditText
+                    android:id="@+id/editMontoCarrito"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:hint="Monto del carrito (CLP)" />
+
+                <!-- Ciudad destino (Plaza de Armas) -->
+                <Spinner
+                    android:id="@+id/spinnerCiudad"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp" />
+
+                <!-- Ubicación del usuario + acciones -->
+                <TextView
+                    android:id="@+id/tvMiUbicacion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Mi ubicación: —"
+                    android:layout_marginTop="6dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="6dp">
+
+                    <Button
+                        android:id="@+id/btnObtenerUbicacion"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Obtener mi ubicación" />
+
+                    <Button
+                        android:id="@+id/btnCalcularTotal"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Calcular total" />
+                </LinearLayout>
+
+                <!-- Resultado -->
+                <TextView
+                    android:id="@+id/tvResultadoDespacho"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Distancia: —  |  Despacho: —  |  Total: —"
+                    android:layout_marginTop="6dp" />
+
+                <!-- Guardar pedido -->
+                <Button
+                    android:id="@+id/btnConfirmarPedido"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Confirmar pedido"
+                    android:layout_marginTop="8dp" />
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+</ScrollView>

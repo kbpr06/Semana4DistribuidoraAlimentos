@@ -152,6 +152,32 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 
+
+                <!-- Botón para ir a Monitoreo de Temperatura -->
+                <Button
+                    android:id="@+id/btnTemperatura"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Monitoreo de Temperatura (prototipo)"
+                    android:drawableLeft="@android:drawable/ic_menu_info_details" />
+
+                <!-- Botón para ir a Productos -->
+                <Button
+                    android:id="@+id/btnProductos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Productos / Pedido"
+                    android:drawableLeft="@android:drawable/ic_menu_sort_by_size" />
+                <!-- Botón para ir a Despacho -->
+                <Button
+                    android:id="@+id/btnDespacho"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Despacho"
+                    android:drawableLeft="@android:drawable/ic_menu_directions" />
                 <Button
                     android:id="@+id/btnLogout"
                     android:text="Cerrar sesión"

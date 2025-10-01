@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Pantalla de Monitoreo de Temperatura (prototipo no funcional).
+  Estructura: ConstraintLayout con dos CardView:
+  - Card 1: título + temperatura actual + estado.
+  - Card 2: SeekBar para simular temperatura + botón "Probar alarma".
+-->
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rootTemp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <!-- Card 1: Encabezado y estado -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardHeader"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        app:cardCornerRadius="16dp"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintBottom_toTopOf="@+id/cardControl"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <!-- Contenido del header -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Título -->
+            <TextView
+                android:id="@+id/tvTituloTemp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Monitoreo de Temperatura"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:paddingBottom="4dp"/>
+
+            <!-- Temperatura actual (grande) -->
+            <TextView
+                android:id="@+id/tvTempActual"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-15 °C"
+                android:textSize="36sp"
+                android:textStyle="bold"
+                android:paddingBottom="4dp"/>
+
+            <!-- Estado (OK / ALERTA) -->
+            <TextView
+                android:id="@+id/tvEstado"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="En rango de cadena de frío"
+                android:textSize="14sp"
+                android:textColor="@android:color/holo_green_dark"/>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- Card 2: Control de simulación (SeekBar + botón) -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardControl"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="16dp"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintTop_toBottomOf="@id/cardHeader"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- Contenido del control -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Etiqueta del control -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Simular temperatura (-20°C a +10°C)"
+                android:textStyle="bold"
+                android:paddingBottom="8dp"/>
+
+            <!-- SeekBar para simular temperatura -->
+            <SeekBar
+                android:id="@+id/seekTemp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <!-- Botón para validar/forzar alerta -->
+            <Button
+                android:id="@+id/btnProbarAlarma"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="Probar alarma"/>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

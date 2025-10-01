@@ -74,6 +74,9 @@ public class MenuActivity extends AppCompatActivity {
         Button btnMapa   = findViewById(R.id.btnVerEnMapa);   // Botón "Ver en Google Maps"
         Button btnCalc   = findViewById(R.id.btnAbrirCalculadora); // Botón "Ir a Calculadora"
         Button btnLogout = findViewById(R.id.btnLogout);      // Botón "Cerrar sesión"
+        Button btnTemp = findViewById(R.id.btnTemperatura);   // Botón "Temperatura"
+        Button btnProd = findViewById(R.id.btnProductos);     // Botón "Productos"
+        Button btnDespacho = findViewById(R.id.btnDespacho);  // Botón "despacho"
 
         // 4) Header: mostramos correo (si existe) en la parte superior
         String correo = (user.getEmail() != null) ? user.getEmail() : "(sin correo)";
@@ -97,8 +100,16 @@ public class MenuActivity extends AppCompatActivity {
 
         // 7) Acción: abrir la Calculadora (MainActivity)
         btnCalc.setOnClickListener(v -> startActivity(new Intent(this, MainActivity.class)));
-
-        // 8) Acción: cerrar sesión y volver al Login
+        // 8) Abrir TemperaturaActivity
+        btnTemp.setOnClickListener(v ->
+                startActivity(new Intent(this, TemperaturaActivity.class)));
+        // 9) Abrir ProductosActivity
+        btnProd.setOnClickListener(v ->
+                startActivity(new Intent(this, ProductosActivity.class)));
+        // 10) Acción: abrir despacho
+        btnDespacho.setOnClickListener(v ->
+                startActivity(new Intent(this, DespachoActivity.class)));
+        // 11) Acción: cerrar sesión y volver al Login
         btnLogout.setOnClickListener(v -> {
             auth.signOut();                                        // Cierra la sesión en Firebase
             Toast.makeText(this, "Sesión cerrada", Toast.LENGTH_SHORT).show(); // Feedback

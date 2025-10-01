@@ -17,15 +17,29 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Semana4DistribuidoraAlimentos">
         <activity
+            android:name=".DespachoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ProductosActivity"
+            android:exported="false" />
+        <activity
+            android:name=".TemperaturaActivity"
+            android:exported="false" />
+        <activity
             android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MenuActivity" android:exported="false" />
-        <activity android:name=".MainActivity" android:exported="false" />
+        <activity
+            android:name=".MenuActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="false" />
     </application>
 
 </manifest>
