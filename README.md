@@ -1,77 +1,40 @@
-Semana 5 – Distribuidora de Alimentos (Android/Java)
+📝 Semana 7 – Distribuidora de Alimentos (App Android)
 
-Aplicación Android desarrollada en Java con Android Studio para la asignatura Taller de Aplicaciones Móviles.
-Partimos del trabajo de la Semana 4 (cálculo de despacho y conversión a radianes) y en Semana 5 incorporamos geolocalización y cálculo de distancia hacia Plazas de Armas usando Haversine.
+Este repositorio corresponde al proyecto académico desarrollado en Android Studio a lo largo de varias semanas. Inicialmente implementó autenticación y cálculo básico de despacho; en esta versión (Semana 7) se incorporan nuevas funcionalidades y mejoras visuales.
 
-🚀 Funcionalidades
-Núcleo (Semana 4)
-Formulario para ingresar:
-Monto de compra (CLP)
-Distancia (km) (0 a 20)
-Grados (para conversión a radianes)
+🚀 Funcionalidades implementadas
 
-Cálculos:
-Costo de despacho según reglas del caso.
-Conversión de grados → radianes.
-Resultados visibles en pantalla + logs en Logcat.
-Botón “Ingresar con Gmail (próximamente)” (prototipo, deshabilitado).
+Autenticación con Firebase (registro, login y recuperación de contraseña).
 
+Carrito de compras: selección de productos, cálculo de subtotal y guardado del pedido en Firebase.
 
-Extensión (Semana 5)
+Cálculo de despacho: ingreso del monto del carrito y cálculo del costo de transporte usando reglas definidas.
 
-Obtención de ubicación del dispositivo (coordenadas lat/lon).
-Selección de Plaza de Armas (Spinner con ciudades).
-Cálculo de distancia (km) entre el usuario y la plaza seleccionada con fórmula de Haversine.
-UI mejorada con CardView (secciones separadas: compra y geolocalización).
+Monitoreo de temperatura: pantalla para registrar y consultar datos de temperatura.
 
-Compatibilidad
-Probado en API 21 (Lollipop) y API 26 (Oreo).
+Seguimiento de pedidos: prototipo visual que muestra el estado del despacho (en preparación, en camino, entregado).
 
-🧭 Nota importante (emulador)
-En el emulador no hay GPS real. Si ves distancias irreales (ej. ~9000 km), define la ubicación manualmente:
-Emulador → ⋮ Extended controls → Location → ingresa lat/lon reales → Set Location.
-En un teléfono real la ubicación se obtiene automáticamente al conceder permisos.
+Integración con Firebase Realtime Database para guardar credenciales, pedidos, ubicación y estados.
 
 
-🛠️ Requisitos y entorno
-Android Studio actualizado
-Emuladores API 21 y API 26
-SDKs / System Images instaladas (SDK Manager)
-AVDs configurados (Device Manager)
-Conexión a internet para sincronizar Gradle
 
-▶️ Cómo ejecutar
+🛠️ Requisitos previos
 
-Abrir el proyecto en Android Studio.
-Sync Gradle y esperar a que resuelva dependencias.
-En AVD Manager, iniciar un emulador (API 21 o 26).
-(Opcional/Emulador) Set Location en Extended controls → Location.
-Presionar Run (▶) y seleccionar el dispositivo.
-Probar:
-Cálculo de despacho y radianes (sección 1).
-Obtener ubicación, elegir Plaza y calcular distancia (sección 2).
+Android Studio actualizado (versión recomendada).
 
-✅ Requerimientos (resumen)
+Cuenta Firebase configurada con Authentication y Realtime Database.
 
-Funcionales
+Google Services JSON colocado en /app.
 
-Ingresar monto, distancia y grados.
-Calcular costo de despacho (reglas del caso).
-Convertir grados a radianes.
-Obtener ubicación del dispositivo.
-Seleccionar Plaza de Armas y calcular distancia (Haversine).
-Mostrar resultados en pantalla.
+📦 Instalación y ejecución
 
-No funcionales
-Ejecutarse correctamente en API 21 y API 26.
-Gestionar permisos de ubicación.
-UI organizada con secciones (CardView).
-Código comentado línea por línea.
+Clonar este repositorio.
 
-👨‍💻 Autores
-Karla Pesce · Jaime Codoceo · Sergio Molina
-Asignatura: Taller de Aplicaciones Móviles – Semana 5
+Abrir en Android Studio.
 
-Karla Pesce · Jaime Codoceo · Sergio Molina
+Sincronizar Gradle.
 
-Asignatura: Taller de Aplicaciones Móviles – Semana 5
+Conectar con Firebase (Authentication + Realtime Database).
+
+Ejecutar en emulador API 21 o superior.ler de Aplicaciones Móviles – Semana 5
+
