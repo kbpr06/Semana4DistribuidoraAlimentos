@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "25908328122",
+    "project_id": "distribuidoraapp-5800a",
+    "storage_bucket": "distribuidoraapp-5800a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:25908328122:android:e7277c13636c3b989cf483",
+        "android_client_info": {
+          "package_name": "com.example.semana4distribuidoraalimentos"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA3dUg0Kj2xuGMJ9tF8PAyVGDuXr7C2YVg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
