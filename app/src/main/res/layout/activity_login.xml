@@ -1,113 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-  LoginActivity - UI con CardView
-  - Título de pantalla
-  - Card con email/contraseña
-  - Botones: Iniciar sesión / Crear cuenta
-  - Enlace: ¿Olvidaste tu contraseña? (opcional)
--->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/md_theme_background"
     android:fillViewport="true">
 
     <LinearLayout
-        android:orientation="vertical"
-        android:padding="16dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:gravity="center_horizontal">
 
-        <!-- Título grande -->
-        <TextView
-            android:text="Iniciar sesión"
-            android:textStyle="bold"
-            android:textSize="24sp"
-            android:layout_marginBottom="12dp"
+        <!-- Título principal (agrego width/height para evitar el error) -->
+        <com.google.android.material.textview.MaterialTextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <!-- Línea separadora sutil -->
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#22000000"
-            android:layout_marginBottom="12dp" />
+            android:layout_height="wrap_content"
+            android:text="Iniciar sesión"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:textColor="@color/md_theme_onBackground"
+            android:layout_marginBottom="8dp"
+            android:layout_gravity="center"/>
 
+        <!-- Línea divisoria -->
+        <View
+            android:layout_width="60dp"
+            android:layout_height="3dp"
+            android:background="@color/md_theme_primary"
+            android:layout_marginBottom="24dp"
+            android:layout_gravity="center"/>
 
         <!-- Tarjeta principal -->
-        <androidx.cardview.widget.CardView
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            card:cardUseCompatPadding="true"
-            card:cardCornerRadius="12dp"
-            card:cardElevation="4dp">
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp"
+            android:backgroundTint="@color/md_theme_surface"
+            android:layout_marginBottom="20dp">
 
             <LinearLayout
-                android:padding="16dp"
-                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
 
-                <!-- Email -->
-                <TextView
-                    android:text="Correo electrónico"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-                <EditText
-                    android:id="@+id/etEmail"
-                    android:hint="tu@correo.com"
-                    android:inputType="textEmailAddress"
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.TextInputLayout.Base"
+                    android:hint="Correo electrónico"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textEmailAddress"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.TextInputLayout.Base"
+                    android:hint="Contraseña"
+                    android:layout_marginTop="16dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="12dp"/>
+                    app:endIconMode="password_toggle">
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etPass"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPassword"/>
+                </com.google.android.material.textfield.TextInputLayout>
 
-                <!-- Password -->
-                <TextView
-                    android:text="Contraseña"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-                <EditText
-                    android:id="@+id/etPass"
-                    android:hint="********"
-                    android:inputType="textPassword"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"/>
-
-                <!-- Botones -->
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnLogin"
                     android:text="Iniciar sesión"
+                    android:layout_marginTop="24dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"/>
+                    style="@style/Widget.Button.Primary"/>
 
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnRegister"
                     android:text="Crear cuenta nueva"
+                    android:layout_marginTop="12dp"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.Button.Primary"
+                    app:backgroundTint="@color/md_theme_secondary"/>
 
-                <!-- Olvidé contraseña (opcional) -->
+                <!-- Botón Google -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnGoogle"
+                    android:text="@string/sign_in_google"
+                    android:icon="@drawable/ic_google"
+                    app:iconTint="@android:color/transparent"
+                    app:iconGravity="textStart"
+                    android:layout_marginTop="12dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
+
                 <TextView
                     android:id="@+id/tvForgot"
                     android:text="¿Olvidaste tu contraseña?"
-                    android:textColor="?android:attr/textColorLink"
-                    android:paddingTop="12dp"
-                    android:layout_width="wrap_content"
+                    android:textColor="@color/md_theme_primary"
+                    android:textSize="14sp"
+                    android:gravity="center"
+                    android:layout_marginTop="16dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 
-                <!-- Indicador simple de progreso -->
                 <ProgressBar
                     android:id="@+id/progress"
                     android:visibility="gone"
-                    style="?android:attr/progressBarStyleLarge"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
     </LinearLayout>
 </ScrollView>

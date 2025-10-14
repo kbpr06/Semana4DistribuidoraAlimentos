@@ -1,211 +1,284 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-  Pantalla con 2 CardViews:
-  - Card 1: Carrito (productos con +/- y subtotal, botón para pasar subtotal a despacho)
-  - Card 2: Despacho (ciudad, ubicación, cálculo de costo y total, guardar en Firebase)
--->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="12dp">
+    android:fillViewport="true"
+    android:background="@drawable/bg_login_gradient"
+    android:paddingHorizontal="16dp"
+    android:paddingTop="20dp"
+    android:paddingBottom="16dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
 
-        <!-- ===== CARD 1: CARRITO ===== -->
-        <androidx.cardview.widget.CardView
+        <!-- Encabezado -->
+        <com.google.android.material.textview.MaterialTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="Productos y Despacho"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:textSize="22sp"
+            android:textColor="@color/md_theme_onBackground"
+            android:layout_marginBottom="6dp"/>
+
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="56dp"
+            android:layout_height="3dp"
+            android:layout_gravity="center_horizontal"
             android:layout_marginBottom="16dp"
-            android:foreground="?attr/selectableItemBackground"
-            android:padding="12dp"
-            android:elevation="4dp">
+            app:dividerColor="@color/md_theme_primary"/>
+
+        <!-- ===== CARD 1: SELECCIÓN (Catálogo + Cantidad + Agregar) ===== -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="14dp"
+            android:backgroundTint="@color/md_theme_surface"
+            app:cardCornerRadius="16dp"
+            app:cardUseCompatPadding="true"
+            app:strokeColor="@color/md_outline"
+            app:strokeWidth="1dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="16dp">
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/tvTituloSel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Selecciona producto y cantidad"
                     android:textStyle="bold"
                     android:textSize="16sp"
-                    android:paddingBottom="8dp"/>
+                    android:layout_marginBottom="8dp"/>
 
-                <!-- Spinner: catálogo -->
+                <!-- Catálogo -->
                 <Spinner
                     android:id="@+id/spProducto"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 
-                <!-- Cantidad -->
-                <EditText
-                    android:id="@+id/etCantidad"
+                <!-- Cantidad (mantengo EditText y su id) -->
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.TextInputLayout.Base"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:inputType="number"
-                    android:hint="Cantidad"/>
+                    android:layout_marginTop="10dp"
+                    android:hint="Cantidad"
+                    app:startIconDrawable="@android:drawable/ic_input_add">
 
-                <!-- Botón Agregar -->
-                <Button
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etCantidad"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnAgregar"
+                    style="@style/Widget.Button.Primary"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="Agregar al carrito"/>
+                    android:layout_marginTop="12dp"
+                    android:text="Agregar al carrito"
+                    app:icon="@android:drawable/ic_menu_add"
+                    app:iconGravity="textStart"/>
             </LinearLayout>
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
-        <!-- Card 2: Carrito y total -->
-        <androidx.cardview.widget.CardView
+        <!-- ===== CARD 2: CARRITO (lista + total + guardar + pasar subtotal) ===== -->
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:foreground="?attr/selectableItemBackground"
-            android:padding="12dp"
-            android:elevation="4dp">
+            android:layout_marginBottom="14dp"
+            android:backgroundTint="@color/md_theme_surface"
+            app:cardCornerRadius="16dp"
+            app:cardUseCompatPadding="true"
+            app:strokeColor="@color/md_outline"
+            app:strokeWidth="1dp">
 
-        <LinearLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="16dp"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/tvTituloCarrito"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Carrito"
                     android:textStyle="bold"
                     android:textSize="16sp"
-                    android:paddingBottom="8dp"/>
+                    android:layout_marginBottom="8dp"/>
 
-                <!-- Lista simple de ítems -->
                 <ListView
                     android:id="@+id/lvCarrito"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:divider="@color/md_outline"
+                    android:dividerHeight="1dp"/>
 
-                <!-- Total -->
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/tvTotal"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Total: $0"
                     android:textStyle="bold"
                     android:textSize="16sp"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="8dp"/>
+                    android:gravity="end"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="8dp"/>
 
-                <!-- Guardar pedido -->
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnGuardar"
+                    style="@style/Widget.Button.Primary"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Guardar pedido en Firebase"/>
+                    android:text="Guardar carrito en Firebase"
+                    app:icon="@android:drawable/ic_menu_save"
+                    app:iconGravity="textStart"/>
 
-                <!-- Pasar subtotal al despacho -->
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnAplicarSubtotal"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
                     android:text="Usar subtotal en Despacho"
-                    android:layout_marginTop="8dp" />
-
+                    app:icon="@android:drawable/ic_menu_set_as"
+                    app:iconGravity="textStart"
+                    app:iconTint="@color/md_theme_primary"/>
             </LinearLayout>
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
 
-        <!-- ===== CARD 2: DESPACHO ===== -->
-        <androidx.cardview.widget.CardView
+        <!-- ===== CARD 3: DESPACHO ===== -->
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:foreground="?attr/selectableItemBackground"
-            android:padding="12dp"
-            android:elevation="4dp">
+            android:backgroundTint="@color/md_theme_surface"
+            app:cardCornerRadius="16dp"
+            app:cardUseCompatPadding="true"
+            app:strokeColor="@color/md_outline"
+            app:strokeWidth="1dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="16dp">
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/tvTituloDespacho"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Despacho"
                     android:textStyle="bold"
                     android:textSize="18sp"
-                    android:layout_marginBottom="8dp" />
+                    android:layout_marginBottom="8dp"/>
 
-                <!-- Monto del carrito (llega desde Card 1) -->
-                <EditText
-                    android:id="@+id/editMontoCarrito"
+                <!-- Monto del carrito (mantengo EditText e ID) -->
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.TextInputLayout.Base"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:hint="Monto del carrito (CLP)" />
+                    android:hint="Monto del carrito (CLP)"
+                    app:startIconDrawable="@android:drawable/ic_menu_sort_by_size">
 
-                <!-- Ciudad destino (Plaza de Armas) -->
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editMontoCarrito"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Ciudad destino -->
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Plaza de Armas de:"
+                    android:textSize="12sp"
+                    android:layout_marginTop="8dp"/>
+
                 <Spinner
                     android:id="@+id/spinnerCiudad"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp" />
+                    android:layout_height="wrap_content"/>
 
-                <!-- Ubicación del usuario + acciones -->
-                <TextView
+                <!-- Ubicación + acciones -->
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/tvMiUbicacion"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Mi ubicación: —"
-                    android:layout_marginTop="6dp" />
+                    android:layout_marginTop="8dp"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginTop="6dp">
+                    android:layout_marginTop="8dp"
+                    android:weightSum="2">
 
-                    <Button
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnObtenerUbicacion"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Obtener mi ubicación" />
+                        android:text="Obtener mi ubicación"
+                        app:icon="@android:drawable/ic_menu_mylocation"
+                        app:iconGravity="textStart"
+                        app:iconTint="@color/md_theme_primary"/>
 
-                    <Button
+                    <Space
+                        android:layout_width="8dp"
+                        android:layout_height="0dp"/>
+
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnCalcularTotal"
+                        style="@style/Widget.Button.Primary"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Calcular total" />
+                        android:text="Calcular total"
+                        app:icon="@android:drawable/ic_menu_directions"
+                        app:iconGravity="textStart"/>
                 </LinearLayout>
 
-                <!-- Resultado -->
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/tvResultadoDespacho"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Distancia: —  |  Despacho: —  |  Total: —"
-                    android:layout_marginTop="6dp" />
+                    android:textSize="14sp"
+                    android:typeface="monospace"
+                    android:padding="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="#0F000000"/>
 
-                <!-- Guardar pedido -->
-                <Button
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnConfirmarPedido"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:text="Confirmar pedido"
-                    android:layout_marginTop="8dp" />
-
+                    app:icon="@android:drawable/ic_menu_save"
+                    app:iconGravity="textStart"/>
             </LinearLayout>
-        </androidx.cardview.widget.CardView>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Limitar ancho real a 480dp (look enterprise en pantallas grandes) -->
+        <View android:layout_width="480dp" android:layout_height="0dp"/>
 
     </LinearLayout>
 </ScrollView>

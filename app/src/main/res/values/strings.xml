@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Semana4DistribuidoraAlimentos</string>
+    <string name="default_web_client_id">PEGAR_AQUI_TU_CLIENT_ID_WEB_DE_FIREBASE.apps.googleusercontent.com</string>
+    <string name="sign_in_google">Iniciar sesión con Google</string>
 </resources>

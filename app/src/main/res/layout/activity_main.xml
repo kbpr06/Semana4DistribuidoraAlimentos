@@ -1,254 +1,261 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Layout “ordenado” con dos tarjetas (CardView):
-  - Tarjeta 1: Datos de compra (Semana 4)
-  - Tarjeta 2: Distancia a Plaza de Armas (Semana 5)
-  Todo dentro de un ScrollView para pantallas pequeñas.-->
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true">
-
-    <!-- Contenedor vertical para apilar tarjetas -->
-<LinearLayout
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-android:orientation="vertical"
-android:padding="16dp"
-android:background="#FFF8F8FA">                  <!-- Fondo gris muy claro -->
-
-<!-- =========================== ENCABEZADO =========================== -->
-<TextView
-    android:id="@+id/tvTitulo"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text="Calculadora de Despacho"
-    android:textStyle="bold"
-    android:textSize="25sp"
-    android:paddingBottom="2dp" />
-
-<TextView
-    android:id="@+id/tvSubtitulo"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text="Costeo y distancia de despacho a Plaza de Armas"
-    android:textSize="13sp"
-    android:paddingBottom="12dp" />
-
-<!-- Línea separadora sutil -->
-<View
-    android:layout_width="match_parent"
-    android:layout_height="1dp"
-    android:background="#22000000"
-    android:layout_marginBottom="12dp" />
-
-<!-- ===================== TARJETA 1: SEMANA 4 (COMPRA) ===================== -->
-<androidx.cardview.widget.CardView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="16dp"
-    android:foreground="?android:attr/selectableItemBackground"
-    android:clickable="true"
-    android:focusable="true"
-    android:padding="0dp"
-    app:cardUseCompatPadding="true"
-    app:cardCornerRadius="16dp"
-    app:cardElevation="4dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <!-- Contenido interno de la tarjeta -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
-
-        <!-- Título de la tarjeta -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Datos de compra"
-            android:textStyle="bold"
-            android:textSize="16sp"
-            android:paddingBottom="8dp" />
-
-        <!-- Monto -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Monto de compra (CLP)"
-            android:textSize="12sp" />
-
-        <EditText
-            android:id="@+id/editMonto"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Ej.: 30000"
-            android:inputType="number"
-            android:maxLines="1"
-            android:layout_marginBottom="12dp" />
-
-        <!-- Distancia -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Distancia (km)"
-            android:textSize="12sp" />
-
-        <EditText
-            android:id="@+id/editDistancia"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="0 a 20"
-            android:inputType="number"
-            android:maxLines="1"
-            android:layout_marginBottom="12dp" />
-
-        <!-- Grados para radianes -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Grados para convertir a radianes"
-            android:textSize="12sp" />
-
-        <EditText
-            android:id="@+id/editGrados"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Ej.: 180.0 (opcional)"
-            android:inputType="numberDecimal"
-            android:maxLines="1"
-            android:layout_marginBottom="16dp" />
-
-        <!-- Botón calcular Semana 4 -->
-        <Button
-            android:id="@+id/btnCalcular"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Calcular costo y radianes"
-            android:padding="12dp"
-            android:backgroundTint="#6A5ACD"
-            android:textColor="#FFFFFF" />
-
-        <!-- Resultado de la tarjeta 1 -->
-        <TextView
-            android:id="@+id/textResultado"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Resultados de compra aparecerán aquí…"
-            android:textSize="15sp"
-            android:typeface="monospace"
-            android:padding="12dp"
-            android:background="#0F000000"
-            android:layout_marginTop="12dp" />
-
-        <!-- Nota -->
-        <TextView
-            android:id="@+id/tvNota"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="* Solo números. Distancia válida: 0 a 20 km."
-            android:textSize="12sp"
-            android:layout_marginTop="6dp" />
-
-    </LinearLayout>
-</androidx.cardview.widget.CardView>
-
-<!-- ===================== TARJETA 2: SEMANA 5 (DISTANCIA) ===================== -->
-<androidx.cardview.widget.CardView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="16dp"
-    android:foreground="?android:attr/selectableItemBackground"
-    android:clickable="true"
-    android:focusable="true"
-    app:cardUseCompatPadding="true"
-    app:cardCornerRadius="16dp"
-    app:cardElevation="4dp">
+    android:fillViewport="true"
+    android:background="@drawable/bg_login_gradient">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:paddingHorizontal="16dp"
+        android:paddingTop="24dp"
+        android:paddingBottom="24dp"
+        android:gravity="center_horizontal">
 
-        <!-- Título de la tarjeta -->
-        <TextView
-            android:id="@+id/tvHavTitulo"
+        <!-- Contenedor centrado con ancho máximo -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Distancia de despacho a Plaza de Armas"
-            android:textStyle="bold"
-            android:textSize="16sp"
-            android:paddingBottom="8dp" />
+            android:gravity="center">
 
-        <!-- Botón para obtener ubicación (puedes dejarlo si no activas auto-ubicación) -->
-        <Button
-            android:id="@+id/btnObtenerUbicacion"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Detectar ubicación de origen"
-            android:padding="12dp"
-            android:backgroundTint="#6A5ACD"
-            android:textColor="#FFFFFF" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-        <!-- Lat/Lon detectada -->
-        <TextView
-            android:id="@+id/tvMiUbicacion"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Mi ubicación: lat=?, lon=?"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp" />
+                <!-- ========= ENCABEZADO ========= -->
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tvTitulo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Calculadora de Despacho"
+                    android:textAlignment="center"
+                    android:textStyle="bold"
+                    android:textSize="26sp"
+                    android:textColor="@color/md_theme_onBackground"
+                    android:layout_marginBottom="6dp"/>
 
-        <!-- Ciudad destino -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Plaza de Armas de:"
-            android:textSize="12sp" />
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tvSubtitulo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Costeo y distancia de despacho a Plaza de Armas"
+                    android:textAlignment="center"
+                    android:textSize="14sp"
+                    android:textColor="@color/md_theme_onSurface"/>
 
-        <Spinner
-            android:id="@+id/spinnerCiudad"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp" />
+                <com.google.android.material.divider.MaterialDivider
+                    android:layout_width="56dp"
+                    android:layout_height="3dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="16dp"
+                    app:dividerColor="@color/md_theme_primary"/>
 
-        <!-- Botón calcular distancia -->
-        <Button
-            android:id="@+id/btnCalcularDistancia"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Calcular distancia de despacho"
-            android:padding="12dp"
-            android:backgroundTint="#6A5ACD"
-            android:textColor="#FFFFFF" />
+                <!-- ===== TARJETA 1: SEMANA 4 (COMPRA) ===== -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:backgroundTint="@color/md_theme_surface"
+                    app:cardCornerRadius="16dp"
+                    app:cardUseCompatPadding="true"
+                    app:strokeColor="@color/md_outline"
+                    app:strokeWidth="1dp">
 
-        <!-- Resultado de la tarjeta 2 -->
-        <TextView
-            android:id="@+id/tvResultadoDistancia"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Distancia: — km"
-            android:textSize="15sp"
-            android:typeface="monospace"
-            android:padding="12dp"
-            android:background="#0F000000"
-            android:layout_marginTop="12dp" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Datos de compra"
+                            android:textStyle="bold"
+                            android:textSize="16sp"
+                            android:layout_marginBottom="8dp"/>
+
+                        <!-- Monto -->
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.TextInputLayout.Base"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="Monto de compra (CLP)"
+                            app:startIconDrawable="@android:drawable/ic_menu_sort_by_size">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/editMonto"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="number"
+                                android:maxLines="1"
+                                android:hint="Ej.: 30000"/>
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <!-- Distancia -->
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.TextInputLayout.Base"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:hint="Distancia (km)"
+                            app:startIconDrawable="@android:drawable/ic_menu_mylocation">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/editDistancia"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="number"
+                                android:maxLines="1"
+                                android:hint="0 a 20"/>
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <!-- Grados para radianes -->
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.TextInputLayout.Base"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:hint="Grados para convertir a radianes"
+                            app:startIconDrawable="@android:drawable/ic_menu_today">
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/editGrados"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:inputType="numberDecimal"
+                                android:maxLines="1"
+                                android:hint="Ej.: 180.0 (opcional)"/>
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <!-- Botón calcular Semana 4 -->
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnCalcular"
+                            style="@style/Widget.Button.Primary"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:text="Calcular costo y radianes"
+                            app:icon="@android:drawable/ic_menu_manage"
+                            app:iconGravity="textStart"/>
+
+                        <!-- Resultado -->
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/textResultado"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:text="Resultados de compra aparecerán aquí…"
+                            android:textSize="15sp"
+                            android:typeface="monospace"
+                            android:padding="12dp"
+                            android:background="#0F000000"/>
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tvNota"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="6dp"
+                            android:text="* Solo números. Distancia válida: 0 a 20 km."
+                            android:textSize="12sp"/>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- ===== TARJETA 2: SEMANA 5 (DISTANCIA) ===== -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:backgroundTint="@color/md_theme_surface"
+                    app:cardCornerRadius="16dp"
+                    app:cardUseCompatPadding="true"
+                    app:strokeColor="@color/md_outline"
+                    app:strokeWidth="1dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tvHavTitulo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Distancia de despacho a Plaza de Armas"
+                            android:textStyle="bold"
+                            android:textSize="16sp"
+                            android:layout_marginBottom="8dp"/>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnObtenerUbicacion"
+                            style="@style/Widget.Button.Primary"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Detectar ubicación de origen"
+                            app:icon="@android:drawable/ic_menu_mylocation"
+                            app:iconGravity="textStart"/>
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tvMiUbicacion"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="8dp"
+                            android:paddingBottom="8dp"
+                            android:text="Mi ubicación: lat=?, lon=?"/>
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Plaza de Armas de:"
+                            android:textSize="12sp"/>
+
+                        <!-- Mantengo Spinner para no romper tu lógica -->
+                        <Spinner
+                            android:id="@+id/spinnerCiudad"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="12dp"/>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnCalcularDistancia"
+                            style="@style/Widget.Button.Primary"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Calcular distancia de despacho"
+                            app:icon="@android:drawable/ic_menu_directions"
+                            app:iconGravity="textStart"/>
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tvResultadoDistancia"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:text="Distancia: — km"
+                            android:textSize="15sp"
+                            android:typeface="monospace"
+                            android:padding="12dp"
+                            android:background="#0F000000"/>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Pie / Nota -->
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Nota: en emulador se debe fijar ubicación manual (Extended Controls → Location)."
+                    android:textSize="12sp"
+                    android:textColor="#66000000"
+                    android:paddingBottom="12dp"/>
+
+                <!-- Limita ancho real a 480dp en pantallas grandes -->
+                <View android:layout_width="480dp" android:layout_height="0dp"/>
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
-</androidx.cardview.widget.CardView>
-
-<!-- =========================== PIE / NOTA =========================== -->
-<TextView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text="Nota: en emulador se debe fijar ubicación manual (Extended Controls → Location)."
-    android:textSize="12sp"
-    android:textColor="#66000000"
-    android:paddingLeft="4dp"
-    android:paddingRight="4dp"
-    android:paddingBottom="12dp" />
-
-</LinearLayout>
-    </ScrollView>
+</ScrollView>

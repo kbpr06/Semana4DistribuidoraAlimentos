@@ -1,130 +1,209 @@
-package com.example.semana4distribuidoraalimentos; // Paquete de la app (debe coincidir con el de tu proyecto)
+package com.example.semana4distribuidoraalimentos;
 
-// ===== IMPORTS =====
-import android.content.Intent;          // Para abrir MenuActivity
-import android.os.Bundle;               // Ciclo de vida (onCreate)
-import android.text.TextUtils;          // Utilidades para validar textos vacíos
-import android.util.Patterns;           // Validador de formato de email
-import android.view.View;               // Controlar visibilidad del ProgressBar
-import android.widget.Button;           // Botones de la UI
-import android.widget.EditText;         // Inputs de texto
-import android.widget.ProgressBar;      // Indicador de carga
-import android.widget.TextView;         // Texto clickeable (recuperar contraseña)
-import android.widget.Toast;            // Mensajes cortos en pantalla
+// ===== IMPORTS ANDROID =====
+import android.content.Intent;
+import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Patterns;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity; // Clase base de Activities
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.Task;     // Resultado asíncrono (reset password)
-import com.google.firebase.FirebaseApp;       // Inicialización de Firebase (guard)
-import com.google.firebase.auth.FirebaseAuth; // Autenticación de Firebase
-import com.google.firebase.auth.FirebaseUser; // Representa al usuario autenticado
+// ===== IMPORTS FIREBASE CORE/AUTH =====
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
+
+// ===== IMPORTS GOOGLE SIGN-IN =====
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
 
 public class LoginActivity extends AppCompatActivity {
 
     // ===== Referencias a la UI =====
-    private EditText etEmail;     // Campo para correo
-    private EditText etPass;      // Campo para contraseña
-    private Button btnLogin;      // Botón "Iniciar sesión"
-    private Button btnRegister;   // Botón "Crear cuenta"
-    private TextView tvForgot;    // Texto "¿Olvidaste tu contraseña?"
-    private ProgressBar progress; // Barra de progreso simple
+    private EditText etEmail;
+    private EditText etPass;
+    private Button btnLogin;
+    private Button btnRegister;
+    private Button btnGoogle;      // NUEVO: botón Google
+    private TextView tvForgot;
+    private ProgressBar progress;
 
     // ===== Firebase =====
-    private FirebaseAuth auth;    // Punto de entrada para Auth
+    private FirebaseAuth auth;
+
+    // ===== Google Sign-In =====
+    private GoogleSignInClient googleClient;        // Cliente de Google
+    private static final int RC_SIGN_IN = 100;      // Código de resultado del intent
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {  // Método llamado al crear la Activity
-        super.onCreate(savedInstanceState);               // Llama a la implementación base
-        setContentView(R.layout.activity_login);          // Infla el layout de esta pantalla
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_login); // Infla el layout moderno
 
-        // --- Guard de inicialización (útil si alguna vez falla la auto-init) ---
-        if (FirebaseApp.getApps(this).isEmpty()) {        // ¿No hay app de Firebase registrada?
-            FirebaseApp.initializeApp(this);              // -> Inicializa Firebase manualmente
+        // --- Guard de inicialización de Firebase (por si la auto-init falla) ---
+        if (FirebaseApp.getApps(this).isEmpty()) {
+            FirebaseApp.initializeApp(this);
         }
 
         // 1) Instancia de autenticación
-        auth = FirebaseAuth.getInstance();                // Obtiene la instancia global de Auth
+        auth = FirebaseAuth.getInstance();
 
         // 2) Vinculamos controles del XML por id
-        etEmail     = findViewById(R.id.etEmail);         // Input correo
-        etPass      = findViewById(R.id.etPass);          // Input contraseña
-        btnLogin    = findViewById(R.id.btnLogin);        // Botón login
-        btnRegister = findViewById(R.id.btnRegister);     // Botón registro
-        tvForgot    = findViewById(R.id.tvForgot);        // Enlace recuperar contraseña
-        progress    = findViewById(R.id.progress);        // Barra de progreso
+        etEmail     = findViewById(R.id.etEmail);
+        etPass      = findViewById(R.id.etPass);
+        btnLogin    = findViewById(R.id.btnLogin);
+        btnRegister = findViewById(R.id.btnRegister);
+        btnGoogle   = findViewById(R.id.btnGoogle); // NUEVO
+        tvForgot    = findViewById(R.id.tvForgot);
+        progress    = findViewById(R.id.progress);
 
         // 3) Si ya existe una sesión activa, saltamos directo al Menú
-        FirebaseUser current = auth.getCurrentUser();     // Usuario actualmente logueado (si existe)
-        if (current != null) {                            // Si no es null → ya hay sesión
-            irAMenu();                                    // Abrimos el Menú
-            return;                                       // Evitamos que se muestre el login
+        FirebaseUser current = auth.getCurrentUser();
+        if (current != null) {
+            irAMenu();
+            return;
         }
 
-        // 4) Click en "Iniciar sesión"
+        // === CONFIGURACIÓN GOOGLE SIGN-IN ===
+        // 4) Opciones: pedimos ID Token (para Firebase) y correo del usuario
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                // default_web_client_id viene de strings.xml (Firebase Console)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+
+        // 5) Creamos el cliente de Google con esas opciones
+        googleClient = GoogleSignIn.getClient(this, gso);
+
+        // 6) Click en "Continuar con Google": lanzamos el flujo de Google
+        btnGoogle.setOnClickListener(v -> {
+            mostrarCargando(true);
+            signInWithGoogle();
+        });
+
+        // === TUS LISTENERS EXISTENTES (EMAIL/PASS) ===
         btnLogin.setOnClickListener(v -> {
-            String email = etEmail.getText().toString().trim(); // Leemos el correo (sin espacios)
-            String pass  = etPass.getText().toString().trim();  // Leemos la contraseña
-            if (!validarCampos(email, pass)) return;            // Si no pasa validación → corto
-            mostrarCargando(true);                              // Muestro progreso y deshabilito UI
-            signIn(email, pass);                                // Intento de login en Firebase
+            String email = etEmail.getText().toString().trim();
+            String pass  = etPass.getText().toString().trim();
+            if (!validarCampos(email, pass)) return;
+            mostrarCargando(true);
+            signIn(email, pass);
         });
 
-        // 5) Click en "Crear cuenta"
         btnRegister.setOnClickListener(v -> {
-            String email = etEmail.getText().toString().trim(); // Leemos correo
-            String pass  = etPass.getText().toString().trim();  // Leemos contraseña
-            if (!validarCampos(email, pass)) return;            // Validación básica
-            mostrarCargando(true);                              // Muestro progreso
-            createAccount(email, pass);                         // Intento de registro en Firebase
+            String email = etEmail.getText().toString().trim();
+            String pass  = etPass.getText().toString().trim();
+            if (!validarCampos(email, pass)) return;
+            mostrarCargando(true);
+            createAccount(email, pass);
         });
 
-        // 6) Click en "¿Olvidaste tu contraseña?"
         tvForgot.setOnClickListener(v -> {
-            String email = etEmail.getText().toString().trim();                   // Necesitamos el correo
+            String email = etEmail.getText().toString().trim();
             if (TextUtils.isEmpty(email) || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                etEmail.setError("Ingresa un correo válido");                     // Marca error en campo
-                etEmail.requestFocus();                                           // Lleva el foco al input
-                return;                                                           // No continúo
+                etEmail.setError("Ingresa un correo válido");
+                etEmail.requestFocus();
+                return;
             }
-            mostrarCargando(true);                                               // Muestro progreso
-            resetPassword(email);                                                // Envío mail de recuperación
+            mostrarCargando(true);
+            resetPassword(email);
         });
     }
 
-    // ===== Validación de campos =====
-    private boolean validarCampos(String email, String pass) {
-        // Valida formato de correo
-        if (TextUtils.isEmpty(email) || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            etEmail.setError("Correo inválido");   // Mensaje en el input
-            etEmail.requestFocus();                // Foco al input
-            return false;                          // Corta el flujo
+    // ====== GOOGLE: lanza la pantalla de selección de cuenta ======
+    private void signInWithGoogle() {
+        Intent signInIntent = googleClient.getSignInIntent(); // Intent oficial
+        startActivityForResult(signInIntent, RC_SIGN_IN);     // Esperamos resultado
+    }
+
+    // ====== Resultado del flujo de Google ======
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == RC_SIGN_IN) {
+            // Tarea que contiene la cuenta seleccionada (o error)
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            try {
+                // Si no hay excepción, obtenemos la cuenta
+                GoogleSignInAccount account = task.getResult(ApiException.class);
+                // Obtenemos el ID Token para autenticarnos en Firebase
+                String idToken = account.getIdToken();
+                firebaseAuthWithGoogle(idToken);
+            } catch (ApiException e) {
+                mostrarCargando(false);
+                Toast.makeText(this, "Error al iniciar con Google: " + e.getMessage(),
+                        Toast.LENGTH_LONG).show();
+            }
         }
-        // Valida longitud mínima de contraseña (requisito de Firebase: 6+)
+    }
+
+    // ====== Autenticar en Firebase usando credencial de Google ======
+    private void firebaseAuthWithGoogle(String idToken) {
+        AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
+        auth.signInWithCredential(credential)
+                .addOnCompleteListener(this, task -> {
+                    mostrarCargando(false);
+                    if (task.isSuccessful()) {
+                        Toast.makeText(this, "Inicio con Google exitoso", Toast.LENGTH_SHORT).show();
+                        irAMenu();
+                    } else {
+                        String msg = (task.getException() != null)
+                                ? task.getException().getMessage()
+                                : "Error desconocido";
+                        Toast.makeText(this, "Fallo al autenticar: " + msg, Toast.LENGTH_LONG).show();
+                    }
+                });
+    }
+
+    // ===== Validación de campos email/pass =====
+    private boolean validarCampos(String email, String pass) {
+        if (TextUtils.isEmpty(email) || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            etEmail.setError("Correo inválido");
+            etEmail.requestFocus();
+            return false;
+        }
         if (TextUtils.isEmpty(pass) || pass.length() < 6) {
             etPass.setError("Contraseña mínima de 6 caracteres");
             etPass.requestFocus();
             return false;
         }
-        return true; // OK
+        return true;
     }
 
-    // ===== Control visual de carga (deshabilita/rehabilita la UI) =====
+    // ===== Control visual de carga =====
     private void mostrarCargando(boolean cargando) {
-        progress.setVisibility(cargando ? View.VISIBLE : View.GONE); // Muestra/oculta ProgressBar
-        btnLogin.setEnabled(!cargando);                               // Evita doble click
-        btnRegister.setEnabled(!cargando);                            // Evita doble click
-        tvForgot.setEnabled(!cargando);                               // Bloquea interacciones
+        progress.setVisibility(cargando ? View.VISIBLE : View.GONE);
+        btnLogin.setEnabled(!cargando);
+        btnRegister.setEnabled(!cargando);
+        btnGoogle.setEnabled(!cargando);
+        tvForgot.setEnabled(!cargando);
+        etEmail.setEnabled(!cargando);
+        etPass.setEnabled(!cargando);
     }
 
-    // ===== Registro de cuenta =====
+    // ===== Registro (Firebase email/pass) =====
     private void createAccount(String email, String pass) {
-        auth.createUserWithEmailAndPassword(email, pass)        // Llama a Firebase (async)
-                .addOnCompleteListener(this, task -> {              // Callback cuando termina
-                    mostrarCargando(false);                         // Oculta progreso siempre
-                    if (task.isSuccessful()) {                      // Éxito
+        auth.createUserWithEmailAndPassword(email, pass)
+                .addOnCompleteListener(this, task -> {
+                    mostrarCargando(false);
+                    if (task.isSuccessful()) {
                         Toast.makeText(this, "Cuenta creada", Toast.LENGTH_SHORT).show();
-                        irAMenu();                                  // Ir al Menú
-                    } else {                                        // Error
+                        irAMenu();
+                    } else {
                         String msg = (task.getException() != null)
                                 ? task.getException().getMessage()
                                 : "Error";
@@ -133,15 +212,15 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
-    // ===== Inicio de sesión =====
+    // ===== Inicio de sesión (Firebase email/pass) =====
     private void signIn(String email, String pass) {
-        auth.signInWithEmailAndPassword(email, pass)            // Llama a Firebase (async)
-                .addOnCompleteListener(this, task -> {              // Callback cuando termina
-                    mostrarCargando(false);                         // Oculta progreso
-                    if (task.isSuccessful()) {                      // Éxito
+        auth.signInWithEmailAndPassword(email, pass)
+                .addOnCompleteListener(this, task -> {
+                    mostrarCargando(false);
+                    if (task.isSuccessful()) {
                         Toast.makeText(this, "Bienvenido", Toast.LENGTH_SHORT).show();
-                        irAMenu();                                  // Ir al Menú
-                    } else {                                        // Error
+                        irAMenu();
+                    } else {
                         String msg = (task.getException() != null)
                                 ? task.getException().getMessage()
                                 : "Error";
@@ -150,25 +229,25 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
-    // ===== Recuperación de contraseña (envía email) =====
+    // ===== Recuperación de contraseña =====
     private void resetPassword(String email) {
-        Task<Void> t = auth.sendPasswordResetEmail(email);      // Pide a Firebase el envío del correo
-        t.addOnCompleteListener(task -> {                       // Callback
-            mostrarCargando(false);                             // Oculta progreso
-            if (task.isSuccessful()) {
-                Toast.makeText(this, "Email de recuperación enviado", Toast.LENGTH_LONG).show();
-            } else {
-                String msg = (task.getException() != null)
-                        ? task.getException().getMessage()
-                        : "Error";
-                Toast.makeText(this, "No se pudo enviar: " + msg, Toast.LENGTH_LONG).show();
-            }
-        });
+        auth.sendPasswordResetEmail(email)
+                .addOnCompleteListener(task -> {
+                    mostrarCargando(false);
+                    if (task.isSuccessful()) {
+                        Toast.makeText(this, "Email de recuperación enviado", Toast.LENGTH_LONG).show();
+                    } else {
+                        String msg = (task.getException() != null)
+                                ? task.getException().getMessage()
+                                : "Error";
+                        Toast.makeText(this, "No se pudo enviar: " + msg, Toast.LENGTH_LONG).show();
+                    }
+                });
     }
 
     // ===== Navegación al Menú =====
     private void irAMenu() {
-        startActivity(new Intent(this, MenuActivity.class)); // Abre MenuActivity
-        finish();                                            // Cierra el Login (no vuelve con “atrás”)
+        startActivity(new Intent(this, MenuActivity.class));
+        finish();
     }
 }

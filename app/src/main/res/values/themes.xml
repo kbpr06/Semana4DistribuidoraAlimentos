@@ -1,9 +1,20 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.Semana4DistribuidoraAlimentos" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Tema de la app que usa el Manifest -->
+    <style name="Theme.Semana4DistribuidoraAlimentos" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/md_theme_primary</item>
+        <item name="colorOnPrimary">@color/md_theme_onPrimary</item>
+        <item name="colorSecondary">@color/md_theme_secondary</item>
+
+        <item name="android:statusBarColor">@color/md_theme_primary</item>
+        <item name="android:navigationBarColor">@color/md_theme_surface</item>
+        <item name="android:windowBackground">@drawable/bg_login_gradient</item>
+
+        <!-- Defaults bonitos -->
+        <item name="materialCardViewStyle">@style/Widget.Card.Base</item>
+        <item name="textInputStyle">@style/Widget.TextInputLayout.Base</item>
+        <item name="materialButtonStyle">@style/Widget.Button.Primary</item>
     </style>
 
-    <style name="Theme.Semana4DistribuidoraAlimentos" parent="Base.Theme.Semana4DistribuidoraAlimentos" />
 </resources>

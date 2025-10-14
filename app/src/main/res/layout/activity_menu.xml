@@ -1,192 +1,252 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-  MenuActivity - UI con CardView
-  Bloques:
-  1) Usuario: correo y UID del usuario autenticado.
-  2) Ubicación: última ubicación guardada + botón para registrar/actualizar + ver en mapa.
-  3) Acciones: abrir calculadora y cerrar sesión.
--->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:background="@drawable/bg_login_gradient">
 
     <LinearLayout
-        android:orientation="vertical"
-        android:padding="16dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="24dp"
+        android:paddingBottom="24dp"
+        android:paddingHorizontal="16dp"
+        android:gravity="center_horizontal">
 
-        <TextView
-            android:id="@+id/tvTitulo"
+        <!-- Contenedor centrado y limitado en ancho para look empresarial -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Inicio"
-            android:textStyle="bold"
-            android:textSize="40sp"
-            android:paddingBottom="2dp" />
-
-        <!-- Línea separadora sutil -->
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#22000000"
-            android:layout_marginBottom="12dp" />
-
-
-        <!-- ===== Tarjeta Usuario ===== -->
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            card:cardUseCompatPadding="true"
-            card:cardCornerRadius="12dp"
-            card:cardElevation="4dp">
+            android:gravity="center">
 
             <LinearLayout
-                android:padding="16dp"
-                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:text="Usuario actual"
-                    android:textStyle="bold"
-                    android:textSize="18sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-
-                <TextView
-                    android:id="@+id/tvCorreo"
-                    android:text="Correo: —"
-                    android:layout_marginTop="8dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-
-                <TextView
-                    android:id="@+id/tvUid"
-                    android:text="UID: —"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
-        <!-- ===== Tarjeta Ubicación ===== -->
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            card:cardUseCompatPadding="true"
-            card:cardCornerRadius="12dp"
-            card:cardElevation="4dp">
-
-            <LinearLayout
-                android:padding="16dp"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:gravity="center"
+                android:padding="0dp">
 
-                <TextView
-                    android:text="Ubicación"
-                    android:textStyle="bold"
-                    android:textSize="18sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-
-                <TextView
-                    android:id="@+id/tvUbicacion"
-                    android:text="Ubicación: (sin datos)"
-                    android:layout_marginTop="8dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-
-                <TextView
-                    android:id="@+id/tvHora"
-                    android:text="Última actualización: —"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-
-                <Button
-                    android:id="@+id/btnUbicacion"
-                    android:text="Actualizar / Guardar ubicación"
-                    android:layout_marginTop="12dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-
-                <Button
-                    android:id="@+id/btnVerEnMapa"
-                    android:text="Ver en Google Maps"
-                    android:layout_marginTop="8dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
-        <!-- ===== Tarjeta Acciones ===== -->
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            card:cardUseCompatPadding="true"
-            card:cardCornerRadius="12dp"
-            card:cardElevation="4dp">
-
-            <LinearLayout
-                android:padding="16dp"
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:text="Acciones"
-                    android:textStyle="bold"
-                    android:textSize="18sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-
-                <Button
-                    android:id="@+id/btnAbrirCalculadora"
-                    android:text="Abrir calculadora (Semana 4/5)"
-                    android:layout_marginTop="12dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-
-
-                <!-- Botón para ir a Monitoreo de Temperatura -->
-                <Button
-                    android:id="@+id/btnTemperatura"
+                <!-- Título -->
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tvTitulo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="Monitoreo de Temperatura (prototipo)"
-                    android:drawableLeft="@android:drawable/ic_menu_info_details" />
+                    android:text="Inicio"
+                    android:textAlignment="center"
+                    android:textStyle="bold"
+                    android:textSize="28sp"
+                    android:textColor="@color/md_theme_onBackground"
+                    android:layout_marginBottom="8dp"/>
 
-                <!-- Botón para ir a Productos -->
-                <Button
-                    android:id="@+id/btnProductos"
+                <com.google.android.material.divider.MaterialDivider
+                    android:layout_width="56dp"
+                    android:layout_height="3dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="16dp"
+                    app:dividerColor="@color/md_theme_primary"/>
+
+                <!-- ===== Tarjeta Usuario ===== -->
+                <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="Productos / Pedido"
-                    android:drawableLeft="@android:drawable/ic_menu_sort_by_size" />
-                <!-- Botón para ir a Despacho -->
-                <Button
-                    android:id="@+id/btnDespacho"
+                    android:layout_marginBottom="12dp"
+                    android:backgroundTint="@color/md_theme_surface"
+                    app:cardCornerRadius="16dp"
+                    app:cardUseCompatPadding="true"
+                    app:strokeColor="@color/md_outline"
+                    app:strokeWidth="1dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Usuario actual"
+                            android:textStyle="bold"
+                            android:textSize="18sp"/>
+
+                        <com.google.android.material.divider.MaterialDivider
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="8dp"/>
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tvCorreo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Correo: —"
+                            android:textSize="15sp"/>
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tvUid"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="UID: —"
+                            android:textSize="13sp"
+                            android:textColor="@color/md_outline"/>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- ===== Tarjeta Ubicación ===== -->
+                <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="Despacho"
-                    android:drawableLeft="@android:drawable/ic_menu_directions" />
-                <Button
-                    android:id="@+id/btnLogout"
-                    android:text="Cerrar sesión"
-                    android:layout_marginTop="8dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_marginBottom="12dp"
+                    android:backgroundTint="@color/md_theme_surface"
+                    app:cardCornerRadius="16dp"
+                    app:cardUseCompatPadding="true"
+                    app:strokeColor="@color/md_outline"
+                    app:strokeWidth="1dp">
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Ubicación"
+                            android:textStyle="bold"
+                            android:textSize="18sp"/>
+
+                        <com.google.android.material.divider.MaterialDivider
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="8dp"/>
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tvUbicacion"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Ubicación: (sin datos)"/>
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tvHora"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Última actualización: —"/>
+
+                        <!-- Acciones de ubicación -->
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnUbicacion"
+                            style="@style/Widget.Button.Primary"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:text="Actualizar / Guardar ubicación"
+                            app:icon="@android:drawable/ic_menu_mylocation"
+                            app:iconGravity="textStart"/>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnVerEnMapa"
+                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="Ver en Google Maps"
+                            app:icon="@android:drawable/ic_dialog_map"
+                            app:iconGravity="textStart"
+                            app:iconTint="@color/md_theme_primary"/>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- ===== Tarjeta Acciones ===== -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/md_theme_surface"
+                    app:cardCornerRadius="16dp"
+                    app:cardUseCompatPadding="true"
+                    app:strokeColor="@color/md_outline"
+                    app:strokeWidth="1dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Acciones"
+                            android:textStyle="bold"
+                            android:textSize="18sp"/>
+
+                        <com.google.android.material.divider.MaterialDivider
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginBottom="8dp"/>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnAbrirCalculadora"
+                            style="@style/Widget.Button.Primary"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Abrir calculadora (Semana 4/5)"
+                            app:icon="@android:drawable/ic_menu_manage"
+                            app:iconGravity="textStart"/>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnTemperatura"
+                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="Monitoreo de Temperatura"
+                            app:icon="@android:drawable/ic_menu_info_details"
+                            app:iconGravity="textStart"
+                            app:iconTint="@color/md_theme_primary"/>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnProductos"
+                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="Productos / Pedido"
+                            app:icon="@android:drawable/ic_menu_sort_by_size"
+                            app:iconGravity="textStart"
+                            app:iconTint="@color/md_theme_primary"/>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnDespacho"
+                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="Despacho"
+                            app:icon="@android:drawable/ic_menu_directions"
+                            app:iconGravity="textStart"
+                            app:iconTint="@color/md_theme_primary"/>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnLogout"
+                            style="@style/Widget.MaterialComponents.Button.TextButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:text="Cerrar sesión"
+                            app:icon="@android:drawable/ic_lock_power_off"
+                            app:iconGravity="textStart"/>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Limita ancho real a 480dp en pantallas grandes -->
+                <View android:layout_width="480dp" android:layout_height="0dp"/>
             </LinearLayout>
-        </androidx.cardview.widget.CardView>
+        </LinearLayout>
 
     </LinearLayout>
 </ScrollView>

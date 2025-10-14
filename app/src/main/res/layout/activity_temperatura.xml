@@ -1,33 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-  Pantalla de Monitoreo de Temperatura (prototipo no funcional).
-  Estructura: ConstraintLayout con dos CardView:
-  - Card 1: título + temperatura actual + estado.
-  - Card 2: SeekBar para simular temperatura + botón "Probar alarma".
--->
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/rootTemp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg_login_gradient"
     android:padding="16dp">
 
-    <!-- Card 1: Encabezado y estado -->
-    <androidx.cardview.widget.CardView
+    <!-- ===== Card 1: Encabezado y estado ===== -->
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardHeader"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
-        app:cardCornerRadius="16dp"
+        android:backgroundTint="@color/md_theme_surface"
+        app:cardCornerRadius="18dp"
         app:cardUseCompatPadding="true"
-        app:layout_constraintBottom_toTopOf="@+id/cardControl"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:strokeColor="@color/md_outline"
+        app:strokeWidth="1dp"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- Contenido del header -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -35,76 +30,127 @@
             android:padding="16dp">
 
             <!-- Título -->
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tvTituloTemp"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Monitoreo de Temperatura"
                 android:textStyle="bold"
                 android:textSize="18sp"
-                android:paddingBottom="4dp"/>
+                android:textColor="@color/md_theme_onSurface"
+                android:paddingBottom="8dp"/>
 
-            <!-- Temperatura actual (grande) -->
-            <TextView
-                android:id="@+id/tvTempActual"
-                android:layout_width="wrap_content"
+            <!-- Fila: icono + valor grande + “chip” de estado -->
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="-15 °C"
-                android:textSize="36sp"
-                android:textStyle="bold"
-                android:paddingBottom="4dp"/>
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
 
-            <!-- Estado (OK / ALERTA) -->
-            <TextView
-                android:id="@+id/tvEstado"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="En rango de cadena de frío"
-                android:textSize="14sp"
-                android:textColor="@android:color/holo_green_dark"/>
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/ic_thermo"
+                    android:contentDescription="Icono termómetro"
+                    android:paddingEnd="8dp"/>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tvTempValor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="-15 °C"
+                    android:textStyle="bold"
+                    android:textSize="36sp"
+                    android:textColor="@color/md_theme_onSurface"
+                    android:paddingEnd="12dp"
+                    android:contentDescription="Temperatura actual"/>
+
+                <!-- Mantengo el ID tvEstado (solo le doy estilo de chip) -->
+                <TextView
+                    android:id="@+id/tvEstado"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="En rango de cadena de frío"
+                    android:textSize="12sp"
+                    android:textColor="@color/md_theme_onSurface"
+                    android:paddingHorizontal="10dp"
+                    android:paddingVertical="6dp"
+                    android:background="@drawable/bg_chip_ok"/>
+            </LinearLayout>
         </LinearLayout>
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 
-    <!-- Card 2: Control de simulación (SeekBar + botón) -->
-    <androidx.cardview.widget.CardView
+    <!-- ===== Card 2: Control de simulación ===== -->
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardControl"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="16dp"
+        android:backgroundTint="@color/md_theme_surface"
+        app:cardCornerRadius="18dp"
         app:cardUseCompatPadding="true"
+        app:strokeColor="@color/md_outline"
+        app:strokeWidth="1dp"
         app:layout_constraintTop_toBottomOf="@id/cardHeader"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- Contenido del control -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="16dp">
 
-            <!-- Etiqueta del control -->
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Simular temperatura (-20°C a +10°C)"
                 android:textStyle="bold"
+                android:textColor="@color/md_theme_onSurface"
                 android:paddingBottom="8dp"/>
 
-            <!-- SeekBar para simular temperatura -->
+            <!-- SeekBar: 0..30 => -20..+10  -->
             <SeekBar
-                android:id="@+id/seekTemp"
+                android:id="@+id/seekSimulador"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:max="30"
+                android:progress="5"/>
 
-            <!-- Botón para validar/forzar alerta -->
-            <Button
+            <!-- Pista de valor actual (no afecta lógica) -->
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvHintSeek"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Arrastra para simular la temperatura"
+                android:textSize="12sp"
+                android:textColor="#66000000"
+                android:paddingTop="4dp"/>
+
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnProbarAlarma"
+                style="@style/Widget.Button.Primary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:text="Probar alarma"/>
+                android:text="Probar alarma"
+                app:icon="@android:drawable/ic_dialog_alert"
+                app:iconGravity="textStart"/>
         </LinearLayout>
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
+
+    <!-- Limita ancho máximo a 480dp en pantallas grandes -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="0dp"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gEnd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="0dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
